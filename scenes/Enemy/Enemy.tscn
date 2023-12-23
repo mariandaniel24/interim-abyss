@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=3 uid="uid://cepqhsgdw81p8"]
+
+[ext_resource type="Script" path="res://scenes/Enemy/Enemy.gd" id="1_id313"]
+[ext_resource type="Texture2D" uid="uid://cdt176v4bcfl2" path="res://scenes/Enemy/Assets/enemy-walk-3.png" id="2_jbfvv"]
+[ext_resource type="Texture2D" uid="uid://drgb8d6kugwwy" path="res://scenes/Enemy/Assets/enemy-walk-1.png" id="3_lql6u"]
+[ext_resource type="Texture2D" uid="uid://dyjsqtb7n34gn" path="res://scenes/Enemy/Assets/enemy-walk-2.png" id="4_g53j4"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cfhkk"]
+radius = 21.0
+height = 66.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tx5sx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_jbfvv")
+}],
+"loop": true,
+"name": &"default",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_lql6u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_g53j4")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 2.0
+}]
+
+[node name="Enemy" type="RigidBody2D"]
+collision_layer = 2147483649
+collision_mask = 2147483648
+gravity_scale = 0.0
+script = ExtResource("1_id313")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -2)
+shape = SubResource("CapsuleShape2D_cfhkk")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_tx5sx")
+metadata/_edit_group_ = true

@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bm7ry3bu6xglv"]
+
+[ext_resource type="Script" path="res://scenes/Map/Map.gd" id="1_n32p6"]
+
+[node name="Map" type="Node2D"]
+script = ExtResource("1_n32p6")
+
+[node name="Rooms" type="Node" parent="."]

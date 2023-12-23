@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://dj1fad7aqmwsb"]
+
+[ext_resource type="AudioStream" uid="uid://bfgjwp0qwbbkl" path="res://assets/sounds/forest.ogg" id="1_yeqqe"]
+[ext_resource type="Texture2D" uid="uid://dgny8ub4bjua" path="res://assets/gpt-dump/bg1.png" id="2_1p8u5"]
+[ext_resource type="Script" path="res://scenes/Enemy/Enemies.gd" id="3_t2e3g"]
+[ext_resource type="PackedScene" uid="uid://84oud4fkmwqe" path="res://scenes/Player/Player.tscn" id="4_lyc5v"]
+[ext_resource type="PackedScene" uid="uid://datddq6tv8rbr" path="res://scenes/PlayerSpells/TwistedFireball/TwistedFireball.tscn" id="5_4eug7"]
+
+[node name="Main" type="Node2D"]
+
+[node name="MusicBox" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(1, 0)
+scale = Vector2(1.0028, 1)
+stream = ExtResource("1_yeqqe")
+volume_db = 2.695
+max_distance = 17979.0
+
+[node name="Background" type="Sprite2D" parent="."]
+texture_repeat = 2
+position = Vector2(931, 475)
+scale = Vector2(1.11, 1.11)
+texture = ExtResource("2_1p8u5")
+region_rect = Rect2(344, 280.5, 382, 336)
+
+[node name="Enemies" type="Node" parent="." node_paths=PackedStringArray("player")]
+script = ExtResource("3_t2e3g")
+player = NodePath("../Player")
+
+[node name="Player" parent="." instance=ExtResource("4_lyc5v")]
+position = Vector2(963, 472)
+
+[node name="TwistedFireball" parent="Player" instance=ExtResource("5_4eug7")]
+position = Vector2(-5, -90)
+scale = Vector2(0.25, 0.25)
+
+[node name="TwistedFireball2" parent="Player" instance=ExtResource("5_4eug7")]
+position = Vector2(-66, -31)
