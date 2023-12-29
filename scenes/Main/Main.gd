@@ -1,10 +1,10 @@
 extends Node
-var enemy_scene = preload("res://scenes/Enemy/Enemy.tscn")
+var enemy_scene = preload("res://scenes/Enemies/Ghost/Ghost.tscn")
 
 @export var player: Area2D 
-@export var max_enemies = 25;
-@export var min_spawn_range = 300;
-@export var max_spawn_range = 1500;
+@export var max_enemies: int = 25;
+@export var min_spawn_range: int = 300;
+@export var max_spawn_range: int = 1500;
 
 var can_spawn = true
 var score = 0
@@ -12,6 +12,7 @@ var score = 0
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
+
 func spawn_enemies():
 	if not can_spawn:
 		return
