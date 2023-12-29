@@ -1,37 +1,47 @@
-[gd_scene load_steps=6 format=3 uid="uid://dj1fad7aqmwsb"]
+[gd_scene load_steps=7 format=3 uid="uid://dj1fad7aqmwsb"]
 
+[ext_resource type="Script" path="res://scenes/Main/Main.gd" id="1_hq6ve"]
 [ext_resource type="AudioStream" uid="uid://bfgjwp0qwbbkl" path="res://assets/sounds/forest.ogg" id="1_yeqqe"]
 [ext_resource type="Texture2D" uid="uid://dgny8ub4bjua" path="res://assets/gpt-dump/bg1.png" id="2_1p8u5"]
-[ext_resource type="Script" path="res://scenes/Enemy/Enemies.gd" id="3_t2e3g"]
 [ext_resource type="PackedScene" uid="uid://84oud4fkmwqe" path="res://scenes/Player/Player.tscn" id="4_lyc5v"]
 [ext_resource type="PackedScene" uid="uid://datddq6tv8rbr" path="res://scenes/PlayerSpells/TwistedFireball/TwistedFireball.tscn" id="5_4eug7"]
+[ext_resource type="PackedScene" uid="uid://clu8aephonmvo" path="res://scenes/Main/HUD.tscn" id="6_bopi1"]
 
-[node name="Main" type="Node2D"]
+[node name="Main" type="Node" node_paths=PackedStringArray("player")]
+script = ExtResource("1_hq6ve")
+player = NodePath("Player")
+
+[node name="Background" type="Sprite2D" parent="."]
+texture_repeat = 2
+position = Vector2(929, 550.84)
+scale = Vector2(1.95117, 1.14289)
+texture = ExtResource("2_1p8u5")
+region_rect = Rect2(344, 280.5, 382, 336)
+
+[node name="Enemies" type="Node" parent="."]
+
+[node name="Player" parent="." instance=ExtResource("4_lyc5v")]
+position = Vector2(1029, 526)
+
+[node name="TwistedFireball" parent="Player" instance=ExtResource("5_4eug7")]
+position = Vector2(-6, -151)
+
+[node name="StartTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="ScoreTimer" type="Timer" parent="."]
 
 [node name="MusicBox" type="AudioStreamPlayer2D" parent="."]
 position = Vector2(1, 0)
 scale = Vector2(1.0028, 1)
 stream = ExtResource("1_yeqqe")
 volume_db = 2.695
+autoplay = true
 max_distance = 17979.0
 
-[node name="Background" type="Sprite2D" parent="."]
-texture_repeat = 2
-position = Vector2(931, 475)
-scale = Vector2(1.11, 1.11)
-texture = ExtResource("2_1p8u5")
-region_rect = Rect2(344, 280.5, 382, 336)
+[node name="HUD" parent="." instance=ExtResource("6_bopi1")]
 
-[node name="Enemies" type="Node" parent="." node_paths=PackedStringArray("player")]
-script = ExtResource("3_t2e3g")
-player = NodePath("../Player")
-
-[node name="Player" parent="." instance=ExtResource("4_lyc5v")]
-position = Vector2(963, 472)
-
-[node name="TwistedFireball" parent="Player" instance=ExtResource("5_4eug7")]
-position = Vector2(-5, -90)
-scale = Vector2(0.25, 0.25)
-
-[node name="TwistedFireball2" parent="Player" instance=ExtResource("5_4eug7")]
-position = Vector2(-66, -31)
+[connection signal="player_hit" from="Player" to="." method="game_over"]
+[connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
+[connection signal="timeout" from="ScoreTimer" to="." method="_on_score_timer_timeout"]
+[connection signal="start_game" from="HUD" to="." method="new_game"]

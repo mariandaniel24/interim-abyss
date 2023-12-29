@@ -12,8 +12,11 @@ config_version=5
 
 config/name="interim-abyss"
 run/main_scene="res://scenes/Main/Main.tscn"
+config/quit_on_go_back=false
 config/features=PackedStringArray("4.2", "Mobile")
-config/icon="res://icon.svg"
+boot_splash/bg_color=Color(0.141176, 0.141176, 0.141176, 1)
+boot_splash/image="res://logo.png"
+config/icon="res://logo.png"
 
 [display]
 
