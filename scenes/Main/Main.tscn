@@ -10,10 +10,11 @@
 [node name="Main" type="Node" node_paths=PackedStringArray("player")]
 script = ExtResource("1_hq6ve")
 player = NodePath("Player")
+max_enemies = 270
 
 [node name="Background" type="Sprite2D" parent="."]
 texture_repeat = 2
-position = Vector2(929, 550.84)
+position = Vector2(975, 573)
 scale = Vector2(1.95117, 1.14289)
 texture = ExtResource("2_1p8u5")
 region_rect = Rect2(344, 280.5, 382, 336)
@@ -22,9 +23,12 @@ region_rect = Rect2(344, 280.5, 382, 336)
 
 [node name="Player" parent="." instance=ExtResource("4_lyc5v")]
 position = Vector2(989, 537)
+speed = 250
+max_health = 70
 
 [node name="TwistedFireball" parent="Player" instance=ExtResource("5_4eug7")]
 position = Vector2(-6, -151)
+speed = 2000.0
 
 [node name="StartTimer" type="Timer" parent="."]
 one_shot = true

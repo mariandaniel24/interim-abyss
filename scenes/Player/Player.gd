@@ -3,12 +3,11 @@ signal health_changed
 signal death
 
 
-const INITIAL_HEALTH = 5
 
 
 @export var speed: int = 600
 @export var max_health = 5
-var health = INITIAL_HEALTH 
+var health = max_health 
 var screen_size = Vector2(0, 0)
 
 
@@ -60,6 +59,6 @@ func start():
 	show()
 	position = Vector2(screen_size.x / 2, screen_size.y / 2)
 	$CollisionShape2D.disabled = false
-	health = INITIAL_HEALTH
+	health = max_health
 	health_changed.emit(health, max_health, true) # emitting the signal to update the health bar
 
