@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cdt176v4bcfl2"
-path="res://.godot/imported/enemy-walk-3.png-79d8002713d64aad74c52da2a78d016d.ctex"
+path="res://.godot/imported/ghost-walk-3.png-b01431d27ae8e886421fdd05a429f1f3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/Enemies/Ghost/Assets/enemy-walk-3.png"
-dest_files=["res://.godot/imported/enemy-walk-3.png-79d8002713d64aad74c52da2a78d016d.ctex"]
+source_file="res://scenes/Enemies/Ghost/Assets/ghost-walk-3.png"
+dest_files=["res://.godot/imported/ghost-walk-3.png-b01431d27ae8e886421fdd05a429f1f3.ctex"]
 
 [params]
 

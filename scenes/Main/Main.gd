@@ -30,10 +30,6 @@ func spawn_enemies():
 	await get_tree().create_timer(5).timeout
 	spawn_enemies()
 
-func game_over():
-	$ScoreTimer.stop()
-	can_spawn = false
-	$HUD.show_game_over()
 
 func new_game():
 	get_tree().call_group("enemies", "queue_free")
@@ -52,3 +48,13 @@ func _on_score_timer_timeout():
 
 func _on_start_timer_timeout():
 	$ScoreTimer.start()
+
+
+func game_over():
+	$ScoreTimer.stop()
+	can_spawn = false
+	$HUD.show_game_over()
+	
+
+func _on_player_death():
+	game_over()

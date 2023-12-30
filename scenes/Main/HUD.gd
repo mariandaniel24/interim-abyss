@@ -39,3 +39,9 @@ func _on_start_button_pressed():
 
 func _on_message_timer_timeout():
 	$Message.hide()
+
+func _on_player_health_changed(health: float, health_max: float, is_initial: bool):
+	$HealthBar.modify_health(health, health_max)
+	# If this is the first time we're updating the health bar, don't play the animation.
+	if not is_initial:
+		$DamageOverlayAnimation.play("damage_screen")

@@ -1,6 +1,14 @@
 extends Area2D
-signal player_hit
+signal health_changed
+signal death
+
+
+const INITIAL_HEALTH = 5
+
+
 @export var speed: int = 600
+@export var max_health = 5
+var health = INITIAL_HEALTH 
 var screen_size = Vector2(0, 0)
 
 
@@ -33,13 +41,25 @@ func _process(delta):
 	# position = position.clamp(Vector2.ZERO, screen_size)
 
 
-func _on_body_entered(_body: Node2D):
+# Called when the player is hit by an enemy.
+func _on_body_entered(body: Node2D):
+	if body.is_in_group("enemies") or body.is_in_group("enemy_attacks"):
+		health -= 1
+		health_changed.emit(health, max_health, false)
+		if health <= 0:
+			kill_player()
+
+
+func kill_player():
 	hide()
-	player_hit.emit()
 	$CollisionShape2D.set_deferred("disabled", true)
+	death.emit()
 
 
 func start():
 	show()
 	position = Vector2(screen_size.x / 2, screen_size.y / 2)
 	$CollisionShape2D.disabled = false
+	health = INITIAL_HEALTH
+	health_changed.emit(health, max_health, true) # emitting the signal to update the health bar
+
