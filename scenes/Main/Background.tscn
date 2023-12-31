@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://r5ggcferafkq"]
+
+[ext_resource type="Texture2D" uid="uid://dy286f3b337as" path="res://assets/hud/background.png" id="1_jawe5"]
+
+[node name="Background" type="Sprite2D"]
+position = Vector2(940, 541.5)
+scale = Vector2(1.16964, 1.06152)
+texture = ExtResource("1_jawe5")

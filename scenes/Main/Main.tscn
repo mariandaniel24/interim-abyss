@@ -24,7 +24,6 @@ region_rect = Rect2(344, 280.5, 382, 336)
 [node name="Player" parent="." instance=ExtResource("4_lyc5v")]
 position = Vector2(989, 537)
 speed = 250
-max_health = 70
 
 [node name="TwistedFireball" parent="Player" instance=ExtResource("5_4eug7")]
 position = Vector2(-6, -151)

@@ -53,6 +53,8 @@ func _on_start_timer_timeout():
 func game_over():
 	$ScoreTimer.stop()
 	can_spawn = false
+	for enemy in get_tree().get_nodes_in_group("enemies"):
+		enemy.queue_free()
 	$HUD.show_game_over()
 	
 

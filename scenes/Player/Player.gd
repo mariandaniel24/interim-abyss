@@ -40,13 +40,19 @@ func _process(delta):
 	# position = position.clamp(Vector2.ZERO, screen_size)
 
 
+func damage_player(damage: int):
+	health -= damage
+	health = max(health, 0) # clamp the health so it doesn't go below 0
+	health_changed.emit(health, max_health, false)
+	if health <= 0:
+		kill_player()
+
+
 # Called when the player is hit by an enemy.
 func _on_body_entered(body: Node2D):
-	if body.is_in_group("enemies") or body.is_in_group("enemy_attacks"):
-		health -= 1
-		health_changed.emit(health, max_health, false)
-		if health <= 0:
-			kill_player()
+	if body.is_in_group("enemies"):
+		damage_player(1)
+
 
 
 func kill_player():

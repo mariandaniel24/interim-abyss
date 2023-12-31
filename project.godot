@@ -18,6 +18,10 @@ boot_splash/bg_color=Color(0.141176, 0.141176, 0.141176, 1)
 boot_splash/image="res://logo.png"
 config/icon="res://logo.png"
 
+[audio]
+
+buses/channel_disable_threshold_db=0.0
+
 [display]
 
 window/size/viewport_width=1920
