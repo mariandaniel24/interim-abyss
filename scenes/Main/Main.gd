@@ -1,62 +1,38 @@
 extends Node
 var enemy_scene = preload("res://scenes/Enemies/Ghost/Ghost.tscn")
 
-@export var player: Area2D 
-@export var max_enemies: int = 25;
-@export var min_spawn_range: int = 300;
-@export var max_spawn_range: int = 1500;
+@onready var MainCategoryNode = get_node("Main")
+@onready var SettingsCategoryNode = get_node("Settings")
 
-var can_spawn = true
-var score = 0
+@onready var SettingsMasterVolumeSliderNode = get_node("Settings").get_node("MasterVolumeSlider")
 
-# Called when the node enters the scene tree for the first time.
+
 func _ready():
-	pass
+	# set the initial master volume slider value
+	set_initial_master_volume_slider_value()
 
-func spawn_enemies():
-	if not can_spawn:
-		return
-	var current_enemies = get_children().size()
-	var enemies_to_spawn = (max_enemies - current_enemies)
+func _on_settings_button_pressed():
+	MainCategoryNode.hide()
+	SettingsCategoryNode.show()
 
-	for i in range(enemies_to_spawn):
-		var enemy = enemy_scene.instantiate()
-		var spawn_range = randf_range(min_spawn_range, max_spawn_range)
-		# determine a random position within the spawn range
-		var spawn_position = Vector2(randf_range(-1, 1), randf_range(-1, 1)).normalized() * spawn_range + player.position
-		enemy.position = spawn_position
-		add_child(enemy)
+func _on_exit_button_pressed():
+	get_tree().quit()
 
-	await get_tree().create_timer(5).timeout
-	spawn_enemies()
+func _on_start_button_pressed():
+	get_tree().change_scene_to_file("res://scenes/Game/Game.tscn")
 
-
-func new_game():
-	get_tree().call_group("enemies", "queue_free")
-	score = 0
-	can_spawn = true
-	spawn_enemies()
-
-	$Player.start()
-	$StartTimer.start()
-	$HUD.update_score(score)
-	$HUD.show_message("Get Ready")
+func _on_settings_back_button_pressed():
+	SettingsCategoryNode.hide()
+	MainCategoryNode.show()
 	
-func _on_score_timer_timeout():
-	score += 1
-	$HUD.update_score(score)
+# Settings
+func set_initial_master_volume_slider_value():
+	var master_idx = AudioServer.get_bus_index("Master")
+	var master_volume_db = AudioServer.get_bus_volume_db(master_idx)
+	var master_volume_percent = (master_volume_db + 60) / 60 * 100
+	SettingsMasterVolumeSliderNode.value = master_volume_percent
 
-func _on_start_timer_timeout():
-	$ScoreTimer.start()
-
-
-func game_over():
-	$ScoreTimer.stop()
-	can_spawn = false
-	for enemy in get_tree().get_nodes_in_group("enemies"):
-		enemy.queue_free()
-	$HUD.show_game_over()
-	
-
-func _on_player_death():
-	game_over()
+func _on_master_volume_slider_value_changed(value: float):
+	var master_idx = AudioServer.get_bus_index("Master")
+	var new_volume = (value / 100) * 60 - 60
+	AudioServer.set_bus_volume_db(master_idx, new_volume)

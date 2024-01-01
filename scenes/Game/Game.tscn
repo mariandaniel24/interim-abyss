@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://ckhnnnct0vglw"]
+
+[ext_resource type="Script" path="res://scenes/Game/Game.gd" id="1_okxu4"]
+[ext_resource type="PackedScene" uid="uid://clu8aephonmvo" path="res://scenes/Game/GameHUD.tscn" id="1_r600q"]
+[ext_resource type="Texture2D" uid="uid://dgny8ub4bjua" path="res://assets/gpt-dump/bg1.png" id="2_tssbr"]
+[ext_resource type="PackedScene" uid="uid://84oud4fkmwqe" path="res://scenes/Player/Player.tscn" id="3_nd3hs"]
+[ext_resource type="PackedScene" uid="uid://datddq6tv8rbr" path="res://scenes/PlayerSpells/TwistedFireball/TwistedFireball.tscn" id="4_ul6mv"]
+[ext_resource type="AudioStream" uid="uid://bfgjwp0qwbbkl" path="res://assets/sounds/forest.ogg" id="5_gofbg"]
+
+[node name="Game" type="Node" node_paths=PackedStringArray("player")]
+script = ExtResource("1_okxu4")
+player = NodePath("Player")
+
+[node name="GameHUD" parent="." instance=ExtResource("1_r600q")]
+
+[node name="Background" type="Sprite2D" parent="."]
+texture_repeat = 2
+position = Vector2(975, 573)
+scale = Vector2(1.95117, 1.14289)
+texture = ExtResource("2_tssbr")
+region_rect = Rect2(344, 280.5, 382, 336)
+
+[node name="Enemies" type="Node" parent="."]
+
+[node name="Player" parent="." instance=ExtResource("3_nd3hs")]
+position = Vector2(989, 537)
+speed = 250
+
+[node name="TwistedFireball" parent="Player" instance=ExtResource("4_ul6mv")]
+position = Vector2(-6, -151)
+speed = 2000.0
+
+[node name="StartTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="ScoreTimer" type="Timer" parent="."]
+
+[node name="MusicBox" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(1, 0)
+scale = Vector2(1.0028, 1)
+stream = ExtResource("5_gofbg")
+volume_db = 1.0
+autoplay = true
+max_distance = 17979.0
+bus = &"Music"
+
+[connection signal="start_game" from="GameHUD" to="." method="new_game"]
+[connection signal="death" from="Player" to="." method="_on_player_death"]
+[connection signal="health_changed" from="Player" to="GameHUD" method="_on_player_health_changed"]

@@ -1,52 +1,128 @@
-[gd_scene load_steps=7 format=3 uid="uid://dj1fad7aqmwsb"]
+[gd_scene load_steps=5 format=3 uid="uid://dj1fad7aqmwsb"]
 
 [ext_resource type="Script" path="res://scenes/Main/Main.gd" id="1_hq6ve"]
-[ext_resource type="AudioStream" uid="uid://bfgjwp0qwbbkl" path="res://assets/sounds/forest.ogg" id="1_yeqqe"]
-[ext_resource type="Texture2D" uid="uid://dgny8ub4bjua" path="res://assets/gpt-dump/bg1.png" id="2_1p8u5"]
-[ext_resource type="PackedScene" uid="uid://84oud4fkmwqe" path="res://scenes/Player/Player.tscn" id="4_lyc5v"]
-[ext_resource type="PackedScene" uid="uid://datddq6tv8rbr" path="res://scenes/PlayerSpells/TwistedFireball/TwistedFireball.tscn" id="5_4eug7"]
-[ext_resource type="PackedScene" uid="uid://clu8aephonmvo" path="res://scenes/Main/HUD.tscn" id="6_bopi1"]
+[ext_resource type="PackedScene" uid="uid://r5ggcferafkq" path="res://scenes/Main/Background.tscn" id="2_3oyof"]
+[ext_resource type="FontFile" uid="uid://d1ss5yh1f1vf5" path="res://assets/fonts/Audiowide-Regular.ttf" id="3_k1t2f"]
 
-[node name="Main" type="Node" node_paths=PackedStringArray("player")]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_arff3"]
+
+[node name="Main" type="Node"]
 script = ExtResource("1_hq6ve")
-player = NodePath("Player")
-max_enemies = 270
 
-[node name="Background" type="Sprite2D" parent="."]
-texture_repeat = 2
-position = Vector2(975, 573)
-scale = Vector2(1.95117, 1.14289)
-texture = ExtResource("2_1p8u5")
-region_rect = Rect2(344, 280.5, 382, 336)
+[node name="Settings" type="CanvasLayer" parent="."]
+visible = false
 
-[node name="Enemies" type="Node" parent="."]
+[node name="Background" parent="Settings" instance=ExtResource("2_3oyof")]
 
-[node name="Player" parent="." instance=ExtResource("4_lyc5v")]
-position = Vector2(989, 537)
-speed = 250
+[node name="BackButton" type="Button" parent="Settings"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -100.0
+offset_top = 291.0
+offset_right = 89.0
+offset_bottom = 345.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0.380392, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_k1t2f")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("StyleBoxEmpty_arff3")
+text = "< BACK"
 
-[node name="TwistedFireball" parent="Player" instance=ExtResource("5_4eug7")]
-position = Vector2(-6, -151)
-speed = 2000.0
+[node name="MasterVolumeSlider" type="HSlider" parent="Settings"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -122.0
+offset_right = 151.0
+offset_bottom = -102.0
+grow_horizontal = 2
+grow_vertical = 2
+tooltip_text = "MASTER VOLUME"
+step = 5.0
+value = 50.0
 
-[node name="StartTimer" type="Timer" parent="."]
-one_shot = true
+[node name="MasterVolumeLabel" type="Label" parent="Settings"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = -145.0
+offset_right = 81.0
+offset_bottom = -124.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_k1t2f")
+text = "MASTER VOLUME"
 
-[node name="ScoreTimer" type="Timer" parent="."]
+[node name="Main" type="CanvasLayer" parent="."]
 
-[node name="MusicBox" type="AudioStreamPlayer2D" parent="."]
-position = Vector2(1, 0)
-scale = Vector2(1.0028, 1)
-stream = ExtResource("1_yeqqe")
-volume_db = 1.0
-autoplay = true
-max_distance = 17979.0
-bus = &"Music"
+[node name="Background" parent="Main" instance=ExtResource("2_3oyof")]
 
-[node name="HUD" parent="." instance=ExtResource("6_bopi1")]
+[node name="StartButton" type="Button" parent="Main"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -91.0
+offset_top = 313.0
+offset_right = 92.0
+offset_bottom = 398.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_k1t2f")
+theme_override_font_sizes/font_size = 66
+theme_override_styles/normal = SubResource("StyleBoxEmpty_arff3")
+text = "START"
 
-[connection signal="death" from="Player" to="." method="_on_player_death"]
-[connection signal="health_changed" from="Player" to="HUD" method="_on_player_health_changed"]
-[connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
-[connection signal="timeout" from="ScoreTimer" to="." method="_on_score_timer_timeout"]
-[connection signal="start_game" from="HUD" to="." method="new_game"]
+[node name="SettingsButton" type="Button" parent="Main"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -99.0
+offset_top = 428.0
+offset_right = 102.0
+offset_bottom = 472.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_k1t2f")
+theme_override_font_sizes/font_size = 46
+theme_override_styles/normal = SubResource("StyleBoxEmpty_arff3")
+text = "SETTINGS"
+
+[node name="ExitButton" type="Button" parent="Main"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -124.0
+offset_top = 741.0
+offset_right = 139.0
+offset_bottom = 801.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_colors/font_color = Color(0.352941, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_k1t2f")
+theme_override_font_sizes/font_size = 46
+theme_override_styles/normal = SubResource("StyleBoxEmpty_arff3")
+text = "EXIT"
+
+[connection signal="pressed" from="Settings/BackButton" to="." method="_on_settings_back_button_pressed"]
+[connection signal="pressed" from="Main/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="Main/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="Main/ExitButton" to="." method="_on_exit_button_pressed"]

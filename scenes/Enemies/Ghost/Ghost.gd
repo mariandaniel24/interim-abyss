@@ -21,7 +21,7 @@ func _ready():
 func wake_up():
 	is_awake = true
 	$AnimatedSprite2D.play("walk")
-	player_found = get_node("/root/Main/Player") # Assuming the player_found node is named "Player"
+	player_found = get_node("/root/Game/Player") # Assuming the player_found node is named "Player"
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float):
