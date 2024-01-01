@@ -35,7 +35,6 @@ func apply_damage(amount: float):
 	if health <= 0:
 		kill_entity()
 
-
 func kill_entity():
 	$CollisionShape2D.set_deferred("disabled", true)
 	is_alive = false
@@ -43,3 +42,9 @@ func kill_entity():
 	$AnimatedSprite2D.flip_v = true
 	await get_tree().create_timer(0.5).timeout
 	queue_free()
+
+# This is enemy specific, in the case of Ghost, it's fine to just kill the current entity
+func _on_body_entered(body:Node):
+	print(body)
+	if body.is_in_group("player"):
+		kill_entity()

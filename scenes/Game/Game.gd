@@ -42,17 +42,19 @@ func new_game():
 	spawn_enemies()
 
 	$Player.start()
+	$Player.set_process(true) # enable player
 	$StartTimer.start()
 	$GameHUD.update_score(score)
 	$GameHUD.show_message("Get Ready")
 
 
 func game_over():
-	$ScoreTimer.stop()
 	can_spawn = false
-	for enemy in get_tree().get_nodes_in_group("enemies"):
-		enemy.queue_free()
-		$GameHUD.show_game_over()
+	get_tree().call_group("enemies", "queue_free")
+	$ScoreTimer.stop()
+	$GameHUD.show_game_over()
+	$Player.set_process(false) # disable player
+
 
 
 # EVENTS
